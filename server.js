@@ -11,6 +11,10 @@ const port = 3000;
 // Middleware para processar JSON
 app.use(bodyParser.json());
 
+app.get('/status', (req, res) => {
+    res.status(200).json({ status: 'OK' });
+});
+
 // Rota para listar todos os usuários (GET /users)
 app.get('/users', (req, res) => {
     const sql = `SELECT * FROM users`;
