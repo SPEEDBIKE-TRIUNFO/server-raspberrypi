@@ -11,7 +11,9 @@ const port = 3000;
 // Middleware para processar JSON
 app.use(bodyParser.json());
 
+// Rota Status
 app.get('/status', (req, res) => {
+    console.log("Status: Ok");
     res.status(200).json({ status: 'OK' });
 });
 
