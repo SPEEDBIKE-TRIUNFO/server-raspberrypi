@@ -11,37 +11,75 @@ const port = 3000;
 // Middleware para processar JSON
 app.use(bodyParser.json());
 
+// Middleware para habilitar o CORS
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    );
+    next();
+});
+
 // Rota Status
 app.get('/status', (req, res) => {
     console.log("Status: Ok");
     res.status(200).json({ status: 'OK' });
 });
 
-// Rota para listar todos os usuários (GET /users)
-app.get('/users', (req, res) => {
-    const sql = `SELECT * FROM users`;
+
+
+
+
+app.post('/mapas', (req, res) => {
+    const { name, type, data } = req.body;
+    const sql = `INSERT INTO mapas (name, type, data) VALUES (?, ?, ?)`;
+    db.run(sql, [name, type, data], function (err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+        } else {
+            res.json({ id: this.lastID, name, type, data });
+        }
+    });
+})
+
+
+app.get('/mapas', (req, res) => {
+    const sql = `SELECT * FROM mapas`;
     db.all(sql, [], (err, rows) => {
         if (err) {
-            
             res.status(500).json({ error: err.message });
         } else {
-            res.json({ users: rows });
+            res.json({ mapas: rows });
         }
     });
 });
 
-// Rota para adicionar um usuário (POST /users)
-app.post('/users', (req, res) => {
-    const { name, email } = req.body;
-    const sql = `INSERT INTO users (name, email) VALUES (?, ?)`;
-    db.run(sql, [name, email], function (err) {
+app.delete('/mapas/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = `DELETE FROM mapas WHERE id = ?`;
+    db.run(sql, [id], function (err) {
         if (err) {
             res.status(400).json({ error: err.message });
         } else {
-            res.json({ id: this.lastID, name, email });
+            res.json({ message: 'Mapa excluído com sucesso!' });
         }
     });
 });
+
+app.put('/mapas/:id', (req, res) => {
+    const { id } = req.params;
+    const { name, type, data } = req.body;
+    const sql = `UPDATE mapas SET name = ?, type = ?, data = ? WHERE id = ?`;
+    db.run(sql, [name, type, data, id], function (err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+        } else {
+            res.json({ message: 'Mapa atualizado com sucesso!' });
+        }
+    });
+});
+
 createTable();
 // Iniciar o servidor
 app.listen(port, () => {

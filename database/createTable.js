@@ -3,17 +3,18 @@ const db = require ('./connection') // Importa a conexão com o banco de dados
 
 const createTable = () => {
     const sql = `
-        CREATE TABLE IF NOT EXISTS users (
+        CREATE TABLE IF NOT EXISTS mapas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            email TEXT NOT NULL UNIQUE
+            type TEXT NOT NULL,
+            data TEXT NOT NULL
         )
     `;
     db.run(sql, (err) => {
         if (err) {
             console.error('Erro ao criar a tabela:', err.message);
         } else {
-            console.log('Tabela "users" criada ou já existe.');
+            console.log('Tabela "mapas" criada ou já existe.');
         }
     });
 };
