@@ -80,6 +80,17 @@ app.put('/mapas/:id', (req, res) => {
     });
 });
 
+app.delete('/mapas', (req, res) => {
+    const sql = `DELETE FROM mapas`;
+    db.run(sql, [], function (err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+        } else {
+            res.json({ message: 'Todas as mapas excluídos com sucesso!' });
+        }
+    });
+})
+
 createTable();
 // Iniciar o servidor
 app.listen(port, () => {
