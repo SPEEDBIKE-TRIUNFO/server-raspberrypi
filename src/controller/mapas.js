@@ -8,7 +8,7 @@ async function getMapas(req, res) {
             res.status(500).json({ error: err.message });
         } else {
             console.log(rows);
-            res.json({ mapas: rows });
+            res.status(200).json({ mapas: rows });
         }
     });
 }
@@ -21,7 +21,8 @@ async function createMapas(req, res) {
         if (err) {
             res.status(400).json({ error: err.message });
         } else {
-            res.json({ id: this.lastID, name, type, data });
+            console.log("Created map: ", name, type,data)
+            res.status(201).json({ id: this.lastID, name, type, data });
         }
     });
 }   
@@ -33,7 +34,7 @@ async function deleteMapas(req, res) {
         if (err) {
             res.status(400).json({ error: err.message });
         } else {
-            res.json({ message: 'Mapa excluído com sucesso!' });
+            res.status(200).json({ message: 'Mapa excluído com sucesso!' });
         }
     });
 }   
@@ -46,7 +47,7 @@ async function updateMapas(req, res) {
         if (err) {
             res.status(400).json({ error: err.message });
         } else {
-            res.json({ message: 'Mapa atualizado com sucesso!' });
+            res.status(200).json({ message: 'Mapa atualizado com sucesso!' });
         }
     });
 }   
@@ -57,7 +58,7 @@ async function deleteAllMapas(req, res) {
         if (err) {
             res.status(400).json({ error: err.message });
         } else {
-            res.json({ message: 'Todos os mapas excluídos com sucesso!' });
+            res.status(204).json({ message: 'Todos os mapas excluídos com sucesso!' });
         }
     });
 }
