@@ -15,16 +15,20 @@ async function getMapas(req, res) {
 
 
 async function createMapas(req, res) {
-    const { name, type, data } = req.body;
-    const sql = `INSERT INTO mapas (name, type, data) VALUES (?, ?, ?)`;
-    db.run(sql, [name, type, data], function (err) {
+    const { name, type, data, id_users } = req.body;
+    console.log(name, type, data, id_users)
+    const sql = `INSERT INTO mapas (name, type, data, id_users) VALUES (?, ?, ?, ?)`;
+    db.run(sql, [name, type, data, id_users], function (err) {
         if (err) {
+            console.log(err);
             res.status(400).json({ error: err.message });
         } else {
             console.log("Created map: ", name, type,data)
             res.status(201).json({ id: this.lastID, name, type, data });
         }
     });
+   
+
 }   
 
 async function deleteMapas(req, res) {

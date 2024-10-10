@@ -5,7 +5,7 @@ const routes = require('./routes/mapas');
 const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 // Middleware para processar JSON
 app.use(bodyParser.json());
@@ -20,7 +20,10 @@ app.get('/status', (req, res) => {
 app.use('/api', routes);
 
 
-createTable();
+createTable.mapas();
+createTable.users();
+// createTable.deleteTableUsers();
+// createTable.deleteTableMapas();
 
 // Iniciar o servidor
 app.listen(port, () => {
