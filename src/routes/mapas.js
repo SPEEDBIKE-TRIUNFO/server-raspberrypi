@@ -6,7 +6,8 @@ const express = require('express');
 
 const routes = express.Router();
 
-routes.get('/mapas', mapasController.getMapas);
+routes.get('/mapas/:id/:mapType', mapasController.getMapas);
+
 routes.post('/mapas', mapasController.createMapas);
 routes.delete('/mapas/:id', mapasController.deleteMapas);
 routes.put('/mapas/:id', mapasController.updateMapas);

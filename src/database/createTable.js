@@ -26,8 +26,10 @@ const mapas = () => {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             id_users INTEGER NOT NULL,
             name TEXT NOT NULL,
+            mapIndex INTEGER NOT NULL,
             type TEXT NOT NULL,
             data TEXT NOT NULL,
+            createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (id_users) REFERENCES users (id)
         )
     `;
